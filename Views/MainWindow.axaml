@@ -1,0 +1,408 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:vm="using:Jusy.ViewModels"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        mc:Ignorable="d"
+        d:DesignWidth="1800"
+        d:DesignHeight="1000"
+        MinWidth="800"
+        MinHeight="600"
+        Width="800"
+		Height="600"
+		WindowState="Maximized"
+        x:Class="Jusy.Views.MainWindow"
+        x:DataType="vm:MainWindowViewModel"
+        Icon="/Assets/avalonia-logo.ico"
+        Title="ЖУСИ">
+
+	<Grid Margin="10">
+		<!-- Определение колонок с минимальными размерами -->
+		<Grid.ColumnDefinitions>
+			<ColumnDefinition Width="*" MinWidth="400" />
+			<ColumnDefinition Width="Auto" MinWidth="300" MaxWidth="400" />
+		</Grid.ColumnDefinitions>
+
+		<!-- Определение строк -->
+		<Grid.RowDefinitions>
+			<RowDefinition Height="Auto" />
+			<RowDefinition Height="*" MinHeight="200" />
+			<RowDefinition Height="Auto" />
+		</Grid.RowDefinitions>
+
+		<!-- Панель статистики -->
+		<Border Grid.Column="0"
+                Grid.Row="0"
+                Background="#f8f9fa"
+                BorderBrush="#FF7E7E7E"
+                BorderThickness="1"
+                CornerRadius="3"
+                Margin="0,0,0,10"
+                Padding="10">
+			<StackPanel Orientation="Horizontal"
+			            HorizontalAlignment="Center">
+
+				<!-- В работе -->
+				<TextBlock Margin="0,0,20,0">
+					<Run Text="В работе: "
+					     FontSize="14"
+					     Foreground="#555555"/>
+					<Run Text="{Binding InProgressCount}"
+					     FontSize="14"
+					     FontWeight="Bold"
+					     Foreground="#5ea6df"/>
+				</TextBlock>
+
+				<!-- Реализован -->
+				<TextBlock Margin="0,0,20,0">
+					<Run Text="Реализовано: "
+					     FontSize="14"
+					     Foreground="#555555"/>
+					<Run Text="{Binding CompletedCount}"
+					     FontSize="14"
+					     FontWeight="Bold"
+					     Foreground="#4CAF50"/>
+				</TextBlock>
+
+				<!-- Всего -->
+				<TextBlock>
+					<Run Text="Всего: "
+					     FontSize="14"
+					     Foreground="#555555"/>
+					<Run Text="{Binding TotalCount}"
+					     FontSize="14"
+					     FontWeight="Bold"
+					     Foreground="#FF9800"/>
+				</TextBlock>
+			</StackPanel>
+		</Border>
+
+		<!-- DataGrid с рамкой -->
+		<Border Grid.Column="0"
+                Grid.Row="1"
+                BorderBrush="#FF7E7E7E"
+                BorderThickness="1"
+                CornerRadius="3">
+			<DataGrid ItemsSource="{Binding Items}"
+                      AutoGenerateColumns="False"
+                      GridLinesVisibility="All"
+                      BorderThickness="0"
+				      SelectedItem="{Binding SelectedItem}"
+                      SelectionMode="Single"
+					  IsReadOnly="True"
+					  ColumnWidth="*">
+				<DataGrid.Styles>
+					<Style Selector="DataGridColumnHeader">
+						<Setter Property="FontWeight" Value="Bold"/>
+						<Setter Property="Foreground" Value="Black"/>
+						<Setter Property="Background" Value="#FFF5F5F5"/>
+						<Setter Property="BorderBrush" Value="#FFDDDDDD"/>
+						<Setter Property="BorderThickness" Value="1,0,1,1"/>
+						<Setter Property="Padding" Value="8"/>
+						<Setter Property="HorizontalContentAlignment" Value="Center"/>
+					</Style>
+					<Style Selector="DataGridCell">
+						<Setter Property="Foreground" Value="#FF333333"/>
+						<Setter Property="BorderBrush" Value="#FFEEEEEE"/>
+						<Setter Property="BorderThickness" Value="0,0,1,1"/>
+						<Setter Property="Padding" Value="8"/>
+						<Setter Property="HorizontalContentAlignment" Value="Center"/>
+						<Setter Property="VerticalContentAlignment" Value="Center"/>
+					</Style>
+					<Style Selector="DataGrid:empty">
+						<Setter Property="Template">
+							<ControlTemplate>
+								<TextBlock Text="Нет данных для отображения"
+                                           HorizontalAlignment="Center"
+                                           VerticalAlignment="Center"
+                                           Margin="10"
+                                           Foreground="Gray"/>
+							</ControlTemplate>
+						</Setter>
+					</Style>
+					<!-- Цвет при наведении на строку -->
+					<Style Selector="DataGridRow:pointerover /template/ Rectangle#BackgroundRectangle">
+						<Setter Property="Fill" Value="#E3F2FD"/>
+					</Style>
+					<!-- Цвет выделенной строки -->
+					<Style Selector="DataGridRow:selected /template/ Rectangle#BackgroundRectangle">
+						<Setter Property="Fill" Value="#90CAF9"/>
+					</Style>
+					<!-- Цвет выделенной строки при наведении -->
+					<Style Selector="DataGridRow:selected:pointerover /template/ Rectangle#BackgroundRectangle">
+						<Setter Property="Fill" Value="#64B5F6"/>
+					</Style>
+				</DataGrid.Styles>
+				<DataGrid.Columns>
+					<DataGridTextColumn Header="Дата"
+										Binding="{Binding Date}"
+										Width="*"
+										MinWidth="100" />
+
+					<DataGridTextColumn Header="Номер ИИ"
+                                        Binding="{Binding PartNumber}"
+                                        Width="*"
+										MinWidth="100"/>
+					
+					<DataGridTextColumn Header="Связано с ИИ"
+                                        Binding="{Binding Connected}"
+                                        Width="*"
+										MinWidth="100"/>
+
+					<DataGridTextColumn Header="Кол-во листов ИИ/ТП"
+                                       Binding="{Binding ListCount}"
+                                       Width="*"
+									   MinWidth="150"/>
+
+					<DataGridTextColumn Header="Изделие"
+                                       Binding="{Binding InputDocument}"
+                                       Width="1.5*"
+									   MinWidth="150"/>
+
+					<DataGridTextColumn Header="Фамилия"
+                                       Binding="{Binding LastName}"
+                                       Width="*"
+									   MinWidth="120"/>
+
+					<DataGridTextColumn Header="Реализация"
+                                       Binding="{Binding Implementation}"
+                                       Width="*"
+									   MinWidth="120"/>
+				</DataGrid.Columns>
+			</DataGrid>
+		</Border>
+
+		<!-- Подпись -->
+		<TextBlock Grid.Column="0"
+                   Grid.Row="2"
+                   Text="Разработал: Курганский Д.Ю.; Низовкина К.А.; Старкова А.И. (2025 г.)"
+                   Margin="0,5,0,0"
+                   Foreground="#FF555555"
+                   FontStyle="Italic"/>
+
+		<!-- Правая панель -->
+		<ScrollViewer Grid.Column="1"
+		              Grid.Row="0"
+		              Grid.RowSpan="2"
+		              VerticalScrollBarVisibility="Auto"
+		              Margin="10,0,0,0"
+					  MaxWidth="300">
+			<Grid>
+				<Grid.RowDefinitions>
+					<RowDefinition Height="Auto"/>
+					<!-- Панель поиска -->
+					<RowDefinition Height="250"/>
+					<!-- Чат -->
+					<RowDefinition Height="Auto"/>
+					<!-- Кнопки -->
+					<RowDefinition Height="Auto" MinHeight="200"/>
+					<!-- Информационные сообщения -->
+				</Grid.RowDefinitions>
+
+				<!-- Панель поиска -->
+				<Border Grid.Row="0"
+						Background="#f0f0f0"
+						BorderBrush="Gray"
+						BorderThickness="1"
+						CornerRadius="3">
+					<StackPanel Margin="10">
+						<TextBox x:Name="SearchItem"
+								 Text="{Binding SearchProduct}"
+								 Margin="0,0,0,10"
+								 FontFamily="Arial"
+								 Watermark="Поиск по изделию"
+								 FontSize="14"/>
+						<TextBox x:Name="SearchItemFromNumber"
+								 Text="{Binding SearchNumber}"
+								 Margin="0,0,0,10"
+								 FontFamily="Arial"
+								 Watermark="Поиск по номеру"
+								 FontSize="14"/>
+						<TextBox x:Name="SearchItemFromConnected"
+								 Text="{Binding SearchConnected}"
+								 Margin="0,0,0,10"
+								 FontFamily="Arial"
+								 Watermark="Поиск по вложенным"
+								 FontSize="14"/>
+						<TextBox x:Name="SearchItemFromClient"
+								 Text="{Binding SearchSpecialist}"
+								 Margin="0,0,0,10"
+								 FontFamily="Arial"
+								 Watermark="Поиск по специалисту"
+								 FontSize="14"/>
+					</StackPanel>
+				</Border>
+
+				<!-- Чат -->
+				<Border Grid.Row="1"
+						Height="250"
+						Margin="0,10,0,0"
+						BorderBrush="Gray"
+						BorderThickness="1"
+						CornerRadius="3"
+						Background="#d6d6d6">
+					<ScrollViewer VerticalScrollBarVisibility="Auto"
+								  Padding="10"
+								  Background="White">
+						<ItemsControl ItemsSource="{Binding Messages}" Margin="5,0,0,10">
+							<ItemsControl.ItemsPanel>
+								<ItemsPanelTemplate>
+									<StackPanel/>
+								</ItemsPanelTemplate>
+							</ItemsControl.ItemsPanel>
+							<ItemsControl.ItemTemplate>
+								<DataTemplate>
+									<StackPanel>
+										<Border Margin="0,5,0,5"
+												CornerRadius="3"
+												Background="#d6d6d6"
+												BorderBrush="#DDD"
+												BorderThickness="1"
+												Padding="10">
+											<StackPanel>
+												<TextBlock>
+													<Run Text="{Binding UserName}" FontWeight="Bold"/>
+													<Run Text=": "/>
+												</TextBlock>
+												<TextBlock Text="{Binding Message}"
+														   TextWrapping="Wrap"
+														   Margin="0,5,0,0"/>
+												<TextBlock Text="{Binding Timestamp}"
+														   FontSize="10"
+														   HorizontalAlignment="Right"
+														   Margin="0,5,0,0"/>
+											</StackPanel>
+										</Border>
+									</StackPanel>
+								</DataTemplate>
+							</ItemsControl.ItemTemplate>
+						</ItemsControl>
+					</ScrollViewer>
+				</Border>
+
+				<!-- Панель с кнопками -->
+				<Border Grid.Row="2"
+						Background="White"
+						BorderBrush="Gray"
+						BorderThickness="1"
+						CornerRadius="3"
+						Margin="0,10,0,0"
+						Padding="10">
+					<StackPanel>
+						<TextBox x:Name="MessageTextBox"
+								 FontFamily="Arial"
+								 Watermark="Введите сообщение"
+								 AcceptsReturn="True"
+								 TextWrapping="Wrap"
+								 MinHeight="100"
+								 MaxHeight="300"
+								 FontSize="14"
+								 Margin="0,0,0,10"
+								 Text="{Binding Message}"/>
+						<Grid Margin="0,0,0,10">
+							<Grid.ColumnDefinitions>
+								<ColumnDefinition Width="*"/>
+								<ColumnDefinition Width="10"/>
+								<ColumnDefinition Width="Auto"/>
+							</Grid.ColumnDefinitions>
+							<Button Grid.Column="0"
+									Content="Отправить"
+									FontWeight="Bold"
+									HorizontalAlignment="Stretch"
+									HorizontalContentAlignment="Center"
+									Height="45"
+									Margin="0,0,0,10"
+									Background="#5ea6df"
+									Foreground="Black"
+									Command="{Binding SendMessage}"
+									IsEnabled="{Binding IsEnableChatButton}"/>
+							<Button Grid.Column="2"
+									Width="45"
+									Height="45"
+									Margin="0,0,0,10"
+									Background="#4CAF50"
+									Foreground="White"
+									HorizontalAlignment="Stretch"
+									HorizontalContentAlignment="Center"
+									IsEnabled="{Binding IsEnableChatButton}"
+									Command="{Binding SaveMessage}">
+								<PathIcon Data="F1 M 16,12L 21,17L 21,21L 3,21L 3,17L 8,12L 3,12L 3,3L 21,3L 21,12L 16,12 Z M 7,13L 15,13L 15,17L 7,17L 7,13 Z M 17,7L 7,7L 7,10L 17,10L 17,7 Z"
+										  Foreground="White"/>
+							</Button>
+						</Grid>
+						<Separator Background="#DDD"
+								   Margin="0,0,0,10"/>
+
+						<Button Content="Зарегистрировать новый"
+								FontWeight="Bold"
+								HorizontalAlignment="Stretch"
+								HorizontalContentAlignment="Center"
+								Height="45"
+								Margin="0,0,0,10"
+								Background="#5ea6df"
+								Foreground="Black"
+								Command="{Binding CreateDocument}"
+								IsEnabled="{Binding IsEnableRegisterNewButton}"/>
+
+						<Button Content="Изменить"
+								FontWeight="Bold"
+								HorizontalAlignment="Stretch"
+								HorizontalContentAlignment="Center"
+								Height="45"
+								Background="#5ea6df"
+								Foreground="Black"
+								Command="{Binding EditDocument}"
+								IsEnabled="{Binding IsEnableEditButton}"/>
+					</StackPanel>
+				</Border>
+
+				<!-- Информационные сообщения -->
+				<Border Grid.Row="3"
+						Height="250"
+						Margin="0,10,0,0"
+						BorderBrush="Gray"
+						BorderThickness="1"
+						CornerRadius="3"
+						Background="#f0f0f0">
+					<DockPanel>
+						<TextBlock DockPanel.Dock="Top"
+								   Text="Информационные сообщения"
+								   FontWeight="Bold"
+								   FontSize="14"
+								   Margin="10,10,10,5"
+								   Foreground="#333333"
+								   HorizontalAlignment="Center"/>
+						<ScrollViewer DockPanel.Dock="Top"
+									  VerticalScrollBarVisibility="Auto"
+									  Margin="5">
+							<ItemsControl ItemsSource="{Binding InfoMessages}">
+								<ItemsControl.ItemsPanel>
+									<ItemsPanelTemplate>
+										<StackPanel/>
+									</ItemsPanelTemplate>
+								</ItemsControl.ItemsPanel>
+								<ItemsControl.ItemTemplate>
+									<DataTemplate>
+										<Border Margin="5"
+												CornerRadius="3"
+												Background="White"
+												BorderBrush="#DDD"
+												BorderThickness="1"
+												Padding="8">
+											<TextBlock Text="{Binding Message}"
+													   FontWeight="Bold"
+													   FontSize="12"
+													   Foreground="#00123b"
+													   TextWrapping="Wrap"
+													   HorizontalAlignment="Center"/>
+										</Border>
+									</DataTemplate>
+								</ItemsControl.ItemTemplate>
+							</ItemsControl>
+						</ScrollViewer>
+					</DockPanel>
+				</Border>
+			</Grid>
+		</ScrollViewer>
+	</Grid>
+</Window>

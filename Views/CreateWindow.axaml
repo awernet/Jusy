@@ -1,0 +1,78 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:vm="using:Jusy.ViewModels"
+        x:DataType="vm:CreateWindowViewModel"
+        mc:Ignorable="d" d:DesignWidth="300" d:DesignHeight="500"
+        Width="300" Height="500"
+        MaxWidth="300" MaxHeight="500"
+        x:Class="Jusy.CreateWindow"
+        Title="Создание документа"
+WindowStartupLocation="CenterScreen">
+	<Grid Margin="10">
+		<StackPanel Background="#ffffff">
+			<TextBlock Text="{Binding ErrorMessage}"
+                               FontWeight="Bold"
+					           Foreground="Red"
+                               Margin="10"
+					           TextAlignment="Center"
+					           TextWrapping="Wrap"/>
+			<TextBlock Text="Номер ИИ:"
+                               FontWeight="Bold"
+                               Margin="10"/>
+			<TextBox
+                             x:Name="PartNumberTextBox"
+                             FontFamily="Arial"
+                             AcceptsReturn="False"
+                             FontSize="14"
+                            Width="250"
+                            BorderBrush="#FF7E7E7E"
+                             />
+			<TextBlock Text="Связано с ИИ:"
+                               FontWeight="Bold"
+                               Margin="10"/>
+			<TextBox
+                             x:Name="ConnectedTextBox"
+                             FontFamily="Arial"
+                             AcceptsReturn="False"
+                             FontSize="14"
+                            Width="250"
+                            BorderBrush="#FF7E7E7E"
+                             />
+			<TextBlock Text="Колличество листов ИИ/ТП:"
+                               FontWeight="Bold"
+                               Margin="10"/>
+			<TextBox
+                             x:Name="SheetCountTextBox"
+                             FontFamily="Arial"
+                             AcceptsReturn="False"
+                             FontSize="14"
+                            Width="250"
+                            BorderBrush="#FF7E7E7E"
+                             />
+			<TextBlock Text="Изделие:"
+                               FontWeight="Bold"
+                               Margin="10"/>
+			<TextBox
+                             x:Name="ProductTextBox"
+                             FontFamily="Arial"
+                             AcceptsReturn="False"
+                             FontSize="14"
+                            Width="250"
+                            BorderBrush="#FF7E7E7E"
+                             />
+			<Button Content="Создать"
+                            FontWeight="Bold"
+                            HorizontalAlignment="Stretch"
+                            HorizontalContentAlignment="Center"
+                            Width="250"
+                            Height="45"
+                            Margin="0,30,0,10"
+                            Background="#007eff"
+                            Foreground="Black"
+                            Command="{Binding CreateDocument}"
+                            />
+		</StackPanel>
+	</Grid>
+</Window>

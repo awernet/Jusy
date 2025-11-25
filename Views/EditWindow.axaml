@@ -1,0 +1,75 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:vm="using:Jusy.ViewModels"
+        mc:Ignorable="d" d:DesignWidth="400" d:DesignHeight="550"
+        Width="400" Height="550"
+        x:Class="Jusy.Views.EditWindow"
+        x:DataType="vm:EditWindowViewModel"
+        Title="Редактирование документа"
+        WindowStartupLocation="CenterScreen">
+	<Grid Margin="20">
+		<Grid.RowDefinitions>
+			<RowDefinition Height="Auto"/>
+			<RowDefinition Height="Auto"/>
+			<RowDefinition Height="Auto"/>
+			<RowDefinition Height="Auto"/>
+			<RowDefinition Height="Auto"/>
+			<RowDefinition Height="*"/>
+			<RowDefinition Height="Auto"/>
+		</Grid.RowDefinitions>
+
+		<StackPanel Grid.Row="0" Margin="0,0,0,10">
+			<TextBlock Text="{Binding ErrorMessage}" Margin="0,0,0,5" Foreground="Red" TextAlignment="Center" TextWrapping="Wrap"/>
+		</StackPanel>
+		<!-- Номер детали -->
+		<StackPanel Grid.Row="1" Margin="0,0,0,10">
+			<TextBlock Text="Номер ИИ:" Margin="0,0,0,5"/>
+			<TextBox x:Name="PartNumberTextBox"
+                     Text="{Binding Item.PartNumber}"
+                     Watermark="Введите номер детали"/>
+		</StackPanel>
+
+		<StackPanel Grid.Row="2" Margin="0,0,0,10">
+			<TextBlock Text="Связано ИИ:" Margin="0,0,0,5"/>
+			<TextBox x:Name="ConnectedTextBox"
+                     Text="{Binding Item.Connected}"
+                     Watermark=""/>
+		</StackPanel>
+		
+
+		<!-- Количество листов -->
+		<StackPanel Grid.Row="3" Margin="0,0,0,10">
+			<TextBlock Text="Количество листов ИИ/ТП:" Margin="0,0,0,5"/>
+			<TextBox x:Name="SheetCountTextBox"
+                     Text="{Binding Item.ListCount}"
+                     Watermark="Введите количество"/>
+		</StackPanel>
+
+		<!-- Продукт -->
+		<StackPanel Grid.Row="4" Margin="0,0,0,10">
+			<TextBlock Text="Изделие:" Margin="0,0,0,5"/>
+			<TextBox x:Name="ProductTextBox"
+                     Text="{Binding Item.InputDocument}"
+                     Watermark="Введите название продукта"/>
+		</StackPanel>
+
+		<!-- Реализация (ComboBox) -->
+		<StackPanel Grid.Row="5" Margin="0,0,0,10">
+			<TextBlock Text="Реализация:" Margin="0,0,0,5"/>
+			<ComboBox x:Name="ImplementationComboBox"
+                      SelectedItem="{Binding SelectedImplementation}"
+                      ItemsSource="{Binding ImplementationStatuses}"
+                      IsEnabled="{Binding IsRealization}"
+                      HorizontalAlignment="Stretch"/>
+		</StackPanel>
+
+		<!-- Кнопка сохранения -->
+		<Button Grid.Row="7"
+                Content="Сохранить"
+                Command="{Binding SaveDocument}"
+                HorizontalAlignment="Right"
+                Padding="20,10"/>
+	</Grid>
+</Window>

@@ -1,0 +1,22 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:vm="using:Jusy.ViewModels"
+        mc:Ignorable="d" d:DesignWidth="300" d:DesignHeight="200"
+        Width="300" Height="150"
+        x:Class="Jusy.ErrorWindow"
+        x:DataType="vm:ErrorWindowViewModel"
+        Title="{Binding Title}"
+        WindowStartupLocation="CenterScreen"
+        Topmost="True">
+    <Grid>
+        <TextBlock Text="{Binding ErrorText}"
+                   FontWeight="Bold"
+                   HorizontalAlignment="Center"
+                   VerticalAlignment="Center"
+                   TextAlignment="Center"
+                   TextWrapping="Wrap"
+                   Margin="10"/>
+    </Grid>
+</Window>
