@@ -1,0 +1,16 @@
+[
+	{
+		"enviropment" : "Awernet",
+        "user_name"	 : "Андрей Зернов",	
+		"edit_document" : true,
+		"register" : true,
+		"edit_realization" : true
+	},
+	{
+		"enviropment" : "Иришка",
+		"user_name"	 : "Ирина Зернова",		
+		"edit_document" : false,
+		"register" : true,
+		"edit_realization" : true
+	}
+]
